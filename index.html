@@ -3,52 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Projeto HTML da EBAC com uma pagina inicial simples e organizada.">
+    <meta name="description" content="Projeto HTML da EBAC com uma pagina inicial organizada, responsiva e com navegacao interna.">
     <title>EBAC Tecnologia</title>
     <style>
         :root {
             color-scheme: light;
-            --bg: #f4f7fb;
+            --bg: #eff4fb;
             --surface: #ffffff;
             --text: #1f2937;
             --muted: #6b7280;
             --accent: #2563eb;
+            --accent-strong: #1d4ed8;
+            --accent-soft: #dbeafe;
             --border: #dbe3ee;
+            --shadow: 0 24px 70px rgba(15, 23, 42, 0.10);
         }
 
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%);
+            background:
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 32%),
+                radial-gradient(circle at top right, rgba(99, 102, 241, 0.10), transparent 28%),
+                linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
             color: var(--text);
+        }
+
+        a {
+            color: inherit;
         }
 
         .page {
             min-height: 100vh;
-            display: grid;
-            place-items: center;
-            padding: 24px;
         }
 
-        .card {
-            width: min(100%, 760px);
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(18px);
+            background: rgba(248, 251, 255, 0.82);
+            border-bottom: 1px solid rgba(219, 227, 238, 0.8);
+        }
+
+        .header-inner,
+        .content,
+        .site-footer {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 16px 0;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .brand-mark {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #fff;
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.25);
+        }
+
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 14px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 700;
+            transition: color 0.2s ease;
+        }
+
+        .nav a:hover,
+        .nav a:focus-visible {
+            color: var(--accent);
+        }
+
+        .content {
+            display: grid;
+            gap: 24px;
+            padding: 24px 0 40px;
+        }
+
+        .hero,
+        .panel {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            box-shadow: 0 18px 50px rgba(31, 41, 55, 0.08);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px;
             padding: 32px;
+            overflow: hidden;
+        }
+
+        .hero-copy,
+        .section-copy {
+            display: grid;
+            gap: 16px;
+            align-content: center;
+        }
+
+        .hero-copy p,
+        .section-copy p,
+        .section p,
+        .contact-box p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
         .eyebrow {
             display: inline-block;
-            margin: 0 0 12px;
+            margin: 0;
             padding: 6px 12px;
             border-radius: 999px;
-            background: #eaf1ff;
+            background: var(--accent-soft);
             color: var(--accent);
             font-size: 0.875rem;
             font-weight: 700;
@@ -57,28 +161,23 @@
         }
 
         h1 {
-            margin: 0 0 12px;
-            font-size: clamp(2rem, 5vw, 3.25rem);
+            margin: 0;
+            font-size: clamp(2.2rem, 5vw, 4rem);
             line-height: 1.05;
         }
 
-        p {
-            margin: 0;
-            color: var(--muted);
-            font-size: 1.05rem;
-            line-height: 1.65;
-        }
-
-        .hero {
+        .hero-media-wrap {
             display: grid;
-            gap: 20px;
+            align-items: center;
+            position: relative;
         }
 
         .hero-media {
             width: 100%;
-            max-height: 280px;
+            min-height: 100%;
+            max-height: 380px;
             object-fit: cover;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid var(--border);
             background: #dbeafe;
         }
@@ -87,7 +186,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .button {
@@ -100,46 +199,279 @@
             text-decoration: none;
             font-weight: 700;
             border: 1px solid transparent;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        .button:hover,
+        .button:focus-visible {
+            transform: translateY(-1px);
+        }
+
+        .button.primary:hover,
+        .button.primary:focus-visible {
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.24);
         }
 
         .button.primary {
             background: var(--accent);
             color: #fff;
+            border-color: var(--accent);
         }
 
         .button.secondary {
-            background: #eef4ff;
+            background: #f8fbff;
             color: var(--accent);
             border-color: #cfe0ff;
         }
 
+        .section {
+            display: grid;
+            gap: 18px;
+            padding: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: clamp(1.5rem, 3vw, 2.1rem);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+            border: 1px solid var(--border);
+        }
+
+        .feature-card h3 {
+            margin: 12px 0 8px;
+            font-size: 1.05rem;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .list-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .list-item {
+            padding: 18px 20px;
+            border-radius: 18px;
+            background: #f8fbff;
+            border: 1px solid var(--border);
+        }
+
+        .list-item strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .list-item span {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .contact-box {
+            display: grid;
+            gap: 12px;
+            padding: 20px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(59, 130, 246, 0.04));
+            border: 1px solid rgba(37, 99, 235, 0.12);
+        }
+
+        .contact-box a {
+            color: var(--accent-strong);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .contact-box a:hover,
+        .contact-box a:focus-visible {
+            text-decoration: underline;
+        }
+
+        .site-footer {
+            padding: 0 0 32px;
+            color: var(--muted);
+            text-align: center;
+            line-height: 1.6;
+        }
+
         @media (max-width: 640px) {
-            .card {
+            .header-inner,
+            .section-header {
+                align-items: start;
+                flex-direction: column;
+            }
+
+            .nav {
+                justify-content: flex-start;
+            }
+
+            .hero,
+            .section {
                 padding: 24px;
-                border-radius: 16px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid,
+            .list-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <main class="page">
-        <section class="card hero" aria-labelledby="hero-title">
-            <p class="eyebrow">EBAC Tecnologia</p>
-            <h1 id="hero-title">Uma base organizada para o seu projeto HTML</h1>
-            <p>
-                Esta pagina inicial foi estruturada para servir como ponto de partida para o
-                desenvolvimento do seu conteudo, com uma hierarquia clara e layout responsivo.
-            </p>
-            <img
-                class="hero-media"
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
-                alt="Pessoa trabalhando em um notebook em um ambiente moderno"
-            >
-            <div class="actions">
-                <a class="button primary" href="#">Comecar agora</a>
-                <a class="button secondary" href="#">Saiba mais</a>
+    <div class="page">
+        <header class="site-header">
+            <div class="header-inner">
+                <a class="brand" href="#inicio" aria-label="Ir para o inicio da pagina">
+                    <span class="brand-mark">E</span>
+                    <span>EBAC Tecnologia</span>
+                </a>
+                <nav class="nav" aria-label="Navegacao principal">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#recursos">Recursos</a>
+                    <a href="#sobre">Sobre</a>
+                    <a href="#contato">Contato</a>
+                </nav>
             </div>
-        </section>
-    </main>
+        </header>
+
+        <main class="content">
+            <section class="hero" id="inicio" aria-labelledby="hero-title">
+                <div class="hero-copy">
+                    <p class="eyebrow">EBAC Tecnologia</p>
+                    <h1 id="hero-title">Uma base mais forte para o seu projeto HTML</h1>
+                    <p>
+                        A pagina agora tem navegacao, seções organizadas e um visual mais moderno para
+                        servir como ponto de partida do seu aprendizado e das proximas evolucoes.
+                    </p>
+                    <div class="actions">
+                        <a class="button primary" href="#recursos">Explorar recursos</a>
+                        <a class="button secondary" href="#contato">Falar com a equipe</a>
+                    </div>
+                </div>
+
+                <div class="hero-media-wrap">
+                    <img
+                        class="hero-media"
+                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+                        alt="Pessoa trabalhando em um notebook em um ambiente moderno"
+                    >
+                </div>
+            </section>
+
+            <section class="panel section" id="recursos" aria-labelledby="recursos-title">
+                <div class="section-header">
+                    <div class="section-copy">
+                        <p class="eyebrow">Recursos</p>
+                        <h2 class="section-title" id="recursos-title">O que esta pagina oferece</h2>
+                    </div>
+                    <p>Um conjunto simples de componentes para demonstrar hierarquia visual e estrutura.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon">01</div>
+                        <h3>Navegacao clara</h3>
+                        <p>Links internos organizados para acessar as principais areas da pagina rapidamente.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">02</div>
+                        <h3>Layout responsivo</h3>
+                        <p>Estrutura adaptada para telas pequenas, medias e grandes sem perder legibilidade.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">03</div>
+                        <h3>Visual mais limpo</h3>
+                        <p>Tipografia, espacos e contrastes ajustados para deixar a pagina mais profissional.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel section" id="sobre" aria-labelledby="sobre-title">
+                <div class="section-header">
+                    <div class="section-copy">
+                        <p class="eyebrow">Sobre</p>
+                        <h2 class="section-title" id="sobre-title">Uma estrutura simples para evoluir depois</h2>
+                    </div>
+                </div>
+
+                <div class="list-grid">
+                    <div class="list-item">
+                        <strong>Base semantica</strong>
+                        <span>Header, main, section e footer ajudam a manter o HTML organizado e facil de ler.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Manutencao facil</strong>
+                        <span>Os blocos estao separados de forma que seja simples adicionar mais conteudo depois.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Experiencia consistente</strong>
+                        <span>Os estilos acompanham um mesmo sistema visual para manter unidade na pagina inteira.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Pronto para Git</strong>
+                        <span>A pagina foi mantida em um fluxo simples de alteracoes, commit e publicacao no GitHub.</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel section" id="contato" aria-labelledby="contato-title">
+                <div class="section-header">
+                    <div class="section-copy">
+                        <p class="eyebrow">Contato</p>
+                        <h2 class="section-title" id="contato-title">Quer seguir evoluindo o projeto?</h2>
+                    </div>
+                </div>
+
+                <div class="contact-box">
+                    <p>
+                        Proximo passo natural: adicionar novos blocos, trocar imagens, incluir formularios ou ligar esta pagina a outras telas.
+                    </p>
+                    <a href="mailto:contato@ebactecnologia.com">contato@ebactecnologia.com</a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>EBAC Tecnologia - Projeto HTML inicial com navegacao, secoes e visual atualizado.</p>
+        </footer>
+    </div>
 </body>
 </html>
