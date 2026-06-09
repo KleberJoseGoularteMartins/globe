@@ -33,7 +33,7 @@ jobs:
 
       - name: Build modular bundle (extracted)
         working-directory: extracted
-        run: npm run build
+        run: npx esbuild src/init.js --bundle --outfile=dist/modular.bundle.js --format=esm --sourcemap
 
       - name: Prepare site artifact
         run: |
