@@ -8,5 +8,8 @@
   "dependencies": {
     "three": "^0.152.0",
     "three-globe": "^2.26.8"
+  },
+  "devDependencies": {
+    "esbuild": "^0.18.17"
   }
 }
