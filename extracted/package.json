@@ -1,0 +1,12 @@
+{
+  "name": "globo-modular",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "esbuild src/init.js --bundle --outfile=dist/modular.bundle.js --format=esm --sourcemap"
+  },
+  "dependencies": {
+    "three": "^0.152.0",
+    "three-globe": "^2.26.8"
+  }
+}

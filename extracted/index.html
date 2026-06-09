@@ -14,6 +14,13 @@
     como `../globo-interativo-beautified.js` (mantenha esse arquivo no nível
     superior ou ajuste o caminho para `main.js` se preferir copiar o bundle).
   -->
-  <script type="module" src="./main.js"></script>
+  <script>
+    // Se estivermos servindo de uma subpasta (/extracted/index.html), ajustar a
+    // URL para a raiz esperada pelo roteador da aplicação.
+    if (location.pathname !== '/') {
+      history.replaceState({}, '', '/');
+    }
+  </script>
+  <script type="module" src="/extracted/main.js"></script>
 </body>
 </html>
